@@ -1,0 +1,47 @@
+# sparkstreaming
+# sparkstreaming
+
+##### wordcount example####
+
+ sc.stop
+ import org.apache.spark._
+ import org.apache.spark.streaming._
+  import org.apache.spark.streaming.StreamingContext._
+   val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")
+   val ssc= new StremaingContext(conf, Seconds(1))
+   val ssc= new StreamingContext(conf, Seconds(1))
+   val lines = ssc.socketTextStream("localhost", 9999)
+   val words = lines.flatMap(rec => rec.split(" "))
+   val pairs = words.map( rec => (rec, 1))
+   val wordcount = pairs.reduceByKey(_ + _)
+   wordcount.print()
+   
+   on the terminal 
+   start
+   
+   
+   nc -lk 9999
+   
+   and start typing the lines
+   
+   
+   you will see
+   
+   -------------------------------------------
+Time: 1512583906000 ms
+-------------------------------------------
+(are,1)
+(how,1)
+(will,3)
+(get,1)
+(31,1)
+(surely,1)
+(ge,1)
+(dec,1)
+(it,1)
+(job,1)
+...
+
+
+   
+   
